@@ -10,9 +10,12 @@ $ npm install --save link-summarizer
 ## Usage
 
 ```js
+var callback = function(response, arg1) {
+    console.log(response);
+    console.log(arg1);
+};
 var linkSummarizer = require('link-summarizer');
-
-linkSummarizer('Rainbow');
+linkSummarizer.summarizeLink("https://www.ravikiranj.net/", callback, ["dummy"]);
 ```
 ## License
 
