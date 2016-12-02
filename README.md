@@ -12,10 +12,32 @@ $ npm install --save link-summarizer
 ```js
 var callback = function(response, arg1) {
     console.log(response);
-    console.log(arg1);
 };
-var linkSummarizer = require('link-summarizer');
-linkSummarizer.summarizeLink("https://www.ravikiranj.net/", callback, ["dummy"]);
+
+var summarizer = require("./index")();
+var url = "https://en.wikipedia.org/wiki/Bacteria";
+summarizer.summarizeLink(url, callback, ["dummy"])
+
+/*
+{
+	title: 'Wikipedia',
+	softTitle: 'Wikipedia',
+	date: '. Retrieved 10 September 2008',
+	author: [],
+	publisher: undefined,
+	copyright: 'Text is available under the Creative Commons Attribution-ShareAlike License; additional terms may apply. By using this site, you agree to the Terms of Use and Privacy Policy. Wikipedia® is a registered trademark of the Wikimedia Foundation, Inc., a non-profit organization.',
+	favicon: '/static/favicon/wikipedia.ico',
+	description: undefined,
+	keywords: undefined,
+	lang: 'en',
+	canonicalLink: 'https://en.wikipedia.org/wiki/Bacteria',
+	tags: [],
+	image: null,
+	videos: [],
+	status: 'ok',
+	summary: 'Bacteria were among the first life forms to appear on Earth, and are present in most of its habitats.'
+}
+*/
 ```
 ## License
 
