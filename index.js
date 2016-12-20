@@ -7,7 +7,8 @@
 module.exports = function() {
     'use strict';
     // Private
-    var PAGE_TEXT_MAXLEN = 10000,
+    var PAGE_TEXT_MAXLEN = 2000,
+        SUMMARY_MAXLEN = 400,
         request = require("request"),
         unfluff = require('unfluff'),
         Log = require("log"),
@@ -17,7 +18,7 @@ module.exports = function() {
             if (!string) {
                 return string;
             }
-            return string.length > maxlen ? string.substring(0, maxlen) : string;
+            return string.length > maxlen ? string.substring(0, maxlen-3) + "..." : string;
         },
         _errorHandler = function(error, response, body, url) {
             var statusCode = response ? response.statusCode : null;
@@ -43,7 +44,8 @@ module.exports = function() {
                                 logger.error("Error = ", error)
                                 return;
                             }
-                            pageContent.summary = summary.replace(/\n/g, " ");
+                            var fixedSummary = _trimString(summary.replace(/\n/g, " "), SUMMARY_MAXLEN)
+                            pageContent.summary = fixedSummary
                             pageContent.status = "ok"	
 
                             delete pageContent.text;
