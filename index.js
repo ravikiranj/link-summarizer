@@ -7,7 +7,7 @@
 module.exports = function() {
     'use strict';
     // Private
-    var PAGE_TEXT_MAXLEN = 2000,
+    var PAGE_TEXT_MAXLEN = 10000,
         SUMMARY_MAXLEN = 400,
         request = require("request"),
         unfluff = require('unfluff'),

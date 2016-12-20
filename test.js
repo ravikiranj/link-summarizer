@@ -6,4 +6,5 @@ var callback = function(response, arg1) {
 
 var summarizer = require("./index")();
 var url = "https://en.wikipedia.org/wiki/Bacteria";
+url = "http://www.imdb.com/name/nm4530214/"
 summarizer.summarizeLink(url, callback, ["dummy"])
