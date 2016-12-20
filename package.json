@@ -21,7 +21,7 @@
     "summarize": "1.5.0",
     "request": "2.75.0",
     "unfluff": "1.1.0",
-    "nodejs-text-summarizer": "2.0.3"
+    "node-summary": "1.1.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",

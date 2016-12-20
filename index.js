@@ -7,12 +7,12 @@
 module.exports = function() {
     'use strict';
     // Private
-    var PAGE_TEXT_MAXLEN = 2000,
+    var PAGE_TEXT_MAXLEN = 10000,
         request = require("request"),
         unfluff = require('unfluff'),
         Log = require("log"),
         logger = new Log("info"),
-        textSummarizer = require("nodejs-text-summarizer"),
+        textSummarizer = require("node-summary"),
         _trimString = function(string, maxlen) {
             if (!string) {
                 return string;
@@ -35,20 +35,32 @@ module.exports = function() {
                     pageContent = unfluff(body);
                     pageContent.status = "ok";
                     try {
-                        var trimmedText = _trimString(pageContent.text, PAGE_TEXT_MAXLEN)
-                        pageContent.summary = textSummarizer(trimmedText);
+                        var trimmedText = _trimString(pageContent.text, PAGE_TEXT_MAXLEN);
+                        var emptyTitle = "";
+                        textSummarizer.summarize(emptyTitle, trimmedText, function(err, summary) {
+                            if (err) {
+                                logger.error("Couldn't summarize url = ", url);
+                                logger.error("Error = ", error)
+                                return;
+                            }
+                            pageContent.summary = summary.replace(/\n/g, " ");
+                            pageContent.status = "ok"	
+
+                            delete pageContent.text;
+                            delete pageContent.links;
+
+                            if (typeof(callback) === "function") {
+                                callback.apply(null, [pageContent].concat(callbackArgs));
+                            }
+
+                        });
                     } catch (e) {
                         pageContent.summary = "";
                         logger.error("Encountered exception when trying to summarize url = ", url);
                         logger.error("Exception = ", e)
                     }
-                    delete pageContent.text;
-                    delete pageContent.links;
                 }
 
-                if (typeof(callback) === "function") {
-                    callback.apply(null, [pageContent].concat(callbackArgs));
-                }
             });
 
         }
