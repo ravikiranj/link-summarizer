@@ -1,6 +1,6 @@
 {
   "name": "link-summarizer",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Summarizes a given link",
   "main": "index.js",
   "homepage": "https://github.com/ravikiranj/link-summarizer",

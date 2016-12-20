@@ -4,11 +4,11 @@
  * @author ravikiranj
  * @since dec 2016
  */
-module.exports = function() {
+module.exports = function(summaryMaxLen) {
     'use strict';
     // Private
     var PAGE_TEXT_MAXLEN = 10000,
-        SUMMARY_MAXLEN = 400,
+        SUMMARY_MAXLEN = summaryMaxLen || 400,
         request = require("request"),
         unfluff = require('unfluff'),
         Log = require("log"),
