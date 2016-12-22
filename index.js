@@ -18,7 +18,15 @@ module.exports = function(summaryMaxLen) {
             if (!string) {
                 return string;
             }
-            return string.length > maxlen ? string.substring(0, maxlen-3) + "..." : string;
+            if (string.length <= maxlen)
+            {
+                return string;
+            }
+            // Trim string
+            var trimmedString = string.substr(0, maxlen);
+
+            // Retrim the string if we are in the middle of a word
+            return trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" "))) + " ..."
         },
         _errorHandler = function(error, response, body, url) {
             var statusCode = response ? response.statusCode : null;
