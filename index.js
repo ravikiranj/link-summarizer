@@ -25,8 +25,14 @@ module.exports = function(summaryMaxLen) {
             logger.error("Failed to fetch response for url = %s, statusCode = %d", url, statusCode);
         },
         _summarizeLink = function(url, callback, callbackArgs) {
+            var options = {
+                "url": url,
+                "headers": {
+                    "User-Agent": "Mozilla/5.0 (compatible; LinkSummarizerbot/1.0; +https://github.com/ravikiranj/link-summarizer)"
+                }
+            }
 
-            request.get(url, function(error, response, body) {
+            request.get(options, function(error, response, body) {
                 var statusCode = response ? response.statusCode : null;
                 var pageContent = {"status": "fail"};
 
@@ -44,8 +50,7 @@ module.exports = function(summaryMaxLen) {
                                 logger.error("Error = ", error)
                                 return;
                             }
-                            var fixedSummary = _trimString(summary.replace(/\n/g, " "), SUMMARY_MAXLEN)
-                            pageContent.summary = fixedSummary
+                            pageContent.summary = _trimString(summary.replace(/\n/g, " "), SUMMARY_MAXLEN).trim()
                             pageContent.status = "ok"	
 
                             delete pageContent.text;
